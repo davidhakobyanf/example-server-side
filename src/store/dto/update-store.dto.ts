@@ -3,8 +3,9 @@ import { CreateStoreDto } from "./create-store.dto";
 
 
 export class UpdateStoreDto extends CreateStoreDto{
+    @IsOptional()
     @IsString({
-        message:'Описание обязательно'
+        message:'Описание должно быть строкой'
     })
     description?: string
 }

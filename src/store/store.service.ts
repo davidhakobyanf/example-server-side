@@ -30,21 +30,21 @@ export class StoreService {
     }
 
     async update(storeId:string, userId:string, dto: UpdateStoreDto, ) {
-        await this.getById(userId, storeId)
+        await this.getById(storeId, userId)
 
         return this.prisma.store.update({
             where:{
                 id:storeId,
             },
             data: {
-                title:dto.title,
-                description: dto.description ?? '',
+                ...dto,
+                userId
             }
         })
     }
 
     async delete(storeId:string, userId:string ) {
-        await this.getById(userId, storeId)
+        await this.getById(storeId, userId)
 
         return this.prisma.store.delete({
             where:{
