@@ -1,4 +1,4 @@
-import { Controller, Param, Get, UsePipes, ValidationPipe, Post, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Param, Get, UsePipes, ValidationPipe, Post, Put, Delete, Body, Query } from '@nestjs/common';
 import { ColorService } from './color.service';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { HttpCode } from '@nestjs/common';
@@ -7,13 +7,14 @@ import { ColorDto } from './dto/color.dto';
 @Controller('colors')
 export class ColorController {
   constructor(private readonly colorService: ColorService) {}
+  
 
   @Auth()
-  @Get()
+  @Get('by-storeId/:storeId')
   async getByStoreId(
-    @Param('id') storeId:string,
+    @Query('storeId') storeId:string,
   ) {
-    return this.colorService.getById(storeId)
+    return this.colorService.getByStoreId(storeId)
   }
 
   @Auth()
@@ -28,7 +29,7 @@ export class ColorController {
   @HttpCode(200)
   @Auth()
   @Post()
-  async create(@Param('storeId') storeId:string, @Body() dto: ColorDto) {
+  async create(@Query('storeId') storeId:string, @Body() dto: ColorDto) {
     return this.colorService.create(storeId, dto)
   }
 

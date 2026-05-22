@@ -10,5 +10,7 @@ export class ColorDto {
     })
     value:string;
     
-    
+
+
+
 }
